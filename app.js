@@ -1,13 +1,17 @@
+require('dotenv').config();
+
 const express = require('express');
-const bodyParse = require('body-parser');
-const request = require('request');
+const bodyParser = require('body-parser');
+const logger = require('morgan');
 
 const app = express();
-const index = require('./routes/index');
-const users = require('./routes/users');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static('public'));
+app.set('view engine', 'ejs');
+app.use(logger('dev'));
 
-app.use('/', index);
-app.post('/', users);
+app.use(require('./routes'));
 
 app.listen(8080, () => {
   console.log('Example app listening on port 8080!');

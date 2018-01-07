@@ -1,15 +1,11 @@
+
 const express = require('express');
-const router = express();
-const request = require('request');
-const bodyParse = require('body-parser');
 
+const weathers = require('./weathersRouter');
 
-router.use(bodyParse.urlencoded({ extended: true }));
-router.set('view engine', 'ejs');
+const router = express.Router();
 
-router.get('/', (req, res) => {
-  res.render('index', { weather: null, error: null });
-});
-
+router.get('/', (req, res) => { res.render('index', { weather: null, error: null }); });
+router.use(weathers);
 
 module.exports = router;
