@@ -30,3 +30,4 @@ node_modules
 npm-debug.log
 total.js
 .env
+config/config.json
