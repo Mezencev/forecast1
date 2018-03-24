@@ -8,21 +8,18 @@ module.exports = (app) => {
     res.json('/members');
   });
   app.post('/api/signup', (req, res) => {
-    console.log(req.body);
     db.User.create({
       email: req.body.email,
-      password: req.body.password
-    }).then(function() {
-      res.redirect(307, "/api/login");
-    }).catch(function(err) {
-      console.log(err);
+      password: req.body.password,
+    }).then(() => {
+      res.redirect(307, '/api/login');
+    }).catch((err) => {
       res.json(err);
     });
-  });  
+  });
   app.get('/logout', (req, res) => {
     req.logout();
     res.redirect('/');
   });
   app.get('/members', weathersController.getWeather);
-  
 };

@@ -4,27 +4,26 @@ const db = require('../models');
 
 passport.use(new LocalStrategy(
   {
-    usernameField: 'email'
+    usernameField: 'email',
   },
-  function(email, password, done) {
+  ((email, password, done) => {
     db.User.findOne({
       where: {
-        email: email
-      }
+        email,
+      },
     }).then((dbUser) => {
       if (!dbUser) {
         return done(null, false, {
-          message: 'Encorred email.'
+          message: 'Encorred email.',
+        });
+      } else if (!dbUser.validPassword(password)) {
+        return done(null, false, {
+          message: 'incorred password.',
         });
       }
-      else if (!dbUser.validPassword(password)) {
-        return done (null, false, {
-          message: 'incorred password.'
-        });
-      } 
       return done(null, dbUser);
     });
-  }
+  }),
 ));
 passport.serializeUser((user, cb) => {
   cb(null, user);

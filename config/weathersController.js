@@ -12,7 +12,7 @@ async function getWeather(req, res) {
     return res.render('index', { weather: weatherText, error: null });
   } catch (error) {
     return console.log(error);
-    return res.render('index', { weather: null, error: error });
+    return res.render('index', { weather: null, error });
   }
 }
 
